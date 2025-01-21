@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"go-fetch/pkg/response"
 
 	"github.com/go-resty/resty/v2"
 )
@@ -46,6 +47,12 @@ func (r *Request) MakeRequest(data string) (string, error) {
 	switch method {
 	case "GET":
 		return client.GetRequest(), nil
+	case "POST":
+		return client.PostRequest(), nil
+	case "PUT":
+		return client.PutRequest(), nil
+	case "DELETE":
+		return client.DeleteRequest(), nil
 	default:
 		return "", errors.New("unknown method")
 	}
@@ -56,10 +63,44 @@ func (r *RequestModel) GetRequest() string {
 	client.SetHeaders(r.Headers)
 	client.SetQueryParams(r.Params)
 	client.SetBody(r.Body)
-	fmt.Println(r.Body)
-	response, err := client.Get(r.Url)
+	res, err := client.Get(r.Url)
 	if err != nil {
 		return "there has been an error" + r.Url
+	}
+	response.Resp(res.RawResponse)
+	fmt.Println(res.Status())
+	return string(res.Body())
+}
+func (r *RequestModel) PostRequest() string {
+	client := resty.New().R()
+	client.SetHeaders(r.Headers)
+	client.SetQueryParams(r.Params)
+	client.SetBody(r.Body)
+	response, err := client.Post(r.Url)
+	if err != nil {
+		return "there has been an error"
+	}
+	return string(response.Body())
+}
+func (r *RequestModel) PutRequest() string {
+	client := resty.New().R()
+	client.SetHeaders(r.Headers)
+	client.SetQueryParams(r.Params)
+	client.SetBody(r.Body)
+	response, err := client.Put(r.Url)
+	if err != nil {
+		return "there has been an error"
+	}
+	return string(response.Body())
+}
+func (r *RequestModel) DeleteRequest() string {
+	client := resty.New().R()
+	client.SetHeaders(r.Headers)
+	client.SetQueryParams(r.Params)
+	client.SetBody(r.Body)
+	response, err := client.Delete(r.Url)
+	if err != nil {
+		return "there has been an error"
 	}
 	return string(response.Body())
 }
