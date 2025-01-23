@@ -4,7 +4,6 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
-	"fmt"
 	"go-fetch/pkg/response"
 
 	"github.com/go-resty/resty/v2"
@@ -67,9 +66,7 @@ func (r *RequestModel) GetRequest() string {
 	if err != nil {
 		return "there has been an error" + r.Url
 	}
-	response.Resp(res.RawResponse)
-	fmt.Println(res.Status())
-	return string(res.Body())
+	return response.SendResponse(res.RawResponse, res.Body())
 }
 func (r *RequestModel) PostRequest() string {
 	client := resty.New().R()
