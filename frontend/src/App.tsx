@@ -1,4 +1,6 @@
+import { chakra } from "@chakra-ui/react";
 import { MakeRequest } from "../wailsjs/go/request/Request";
+import { Button } from "./components/ui/button";
 import { useRequestStore } from "./store/store";
 
 function App() {
@@ -37,6 +39,7 @@ function App() {
                 value={token}
                 onChange={(e) => setToken(e.target.value)}
             /> */}
+            <Button>aaaaa</Button>
             <button onClick={() => handleRequest(url)}>request</button>
         </div>
     );
