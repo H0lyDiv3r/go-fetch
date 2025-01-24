@@ -1,6 +1,3 @@
-import { Button } from "./components/ui/button";
-import { Input } from "./components/ui/input";
-import { useState } from "react";
 import { MakeRequest } from "../wailsjs/go/request/Request";
 import { useRequestStore } from "./store/store";
 
@@ -34,13 +31,13 @@ function App() {
 
     return (
         <div className="dark">
-            <Input value={url} onChange={(e) => setUrl(e.target.value)} />
+            <input value={url} onChange={(e) => setUrl(e.target.value)} />
             {/* <Input
                 className="text-black"
                 value={token}
                 onChange={(e) => setToken(e.target.value)}
             /> */}
-            <Button onClick={() => handleRequest(url)}>request</Button>
+            <button onClick={() => handleRequest(url)}>request</button>
         </div>
     );
 }

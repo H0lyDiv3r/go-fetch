@@ -24,7 +24,7 @@ func SendResponse(res *http.Response, body []byte) string {
 	err := json.Unmarshal(body, &bodyData)
 	if err != nil {
 		fmt.Println("there has been an error parsing the bodysss", err)
-		return "parsing error"
+		return "parsing error" + err.Error()
 	}
 	response := &ResponseModel{
 		TimeStamp:     res.Header.Get("Date"),
@@ -38,7 +38,7 @@ func SendResponse(res *http.Response, body []byte) string {
 	jsonRes, err := json.Marshal(response)
 
 	if err != nil {
-		return "parsing error"
+		return "parsing error" + err.Error()
 	}
 
 	return string(jsonRes)
