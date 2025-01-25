@@ -18,8 +18,8 @@ function App() {
     const handleRequest = (url: string) => {
         MakeRequest(
             JSON.stringify({
-                method: "GET",
-                url: "http://localhost:3030/todos/1",
+                method: method,
+                url: url,
                 params: { param1: "param1value" },
                 headers: { Authorization: tkn },
                 body: {
