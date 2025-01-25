@@ -1,5 +1,4 @@
-import { Input } from "@chakra-ui/react";
-import { Field } from "../../ui/field";
+import { FormControl, Input } from "@chakra-ui/react";
 
 type FormInputProps = {
     value: string;
@@ -8,8 +7,8 @@ type FormInputProps = {
 
 export const FormInput: React.FC<FormInputProps> = ({ value, setValue }) => {
     return (
-        <Field>
+        <FormControl>
             <Input value={value} onChange={setValue} />
-        </Field>
+        </FormControl>
     );
 };

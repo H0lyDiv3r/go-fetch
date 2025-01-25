@@ -8,6 +8,7 @@ export const Layout = () => {
             templateColumns={"repeat(12,1fr)"}
             height={"100vh"}
             bg={"gray.900"}
+            color={"white"}
         >
             <GridItem width={"200px"} bg={"gray.800"}>
                 aaa

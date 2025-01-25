@@ -1,6 +1,4 @@
-import { chakra, Input } from "@chakra-ui/react";
 import { MakeRequest } from "../wailsjs/go/request/Request";
-import { Button } from "./components/ui/button";
 import { useRequestStore } from "./store/store";
 import { Layout } from "./layout/layout";
 
@@ -33,7 +31,7 @@ function App() {
     };
 
     return (
-        <div className="dark">
+        <div>
             {/* <Input
                 className="text-black"
                 value={token}
