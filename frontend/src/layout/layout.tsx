@@ -3,17 +3,23 @@ import React from "react";
 import { UrlForm } from "../scenes";
 
 export const Layout = () => {
-    return (
-        <Grid templateColumns={"repeat(12,1fr)"} height={"100vh"}>
-            <GridItem width={"200px"} bg={"gray.800"}>
-                aaa
-            </GridItem>
-            <GridItem colSpan={{ base: 10, lg: 6 }} minW={"400px"}>
-                <UrlForm />
-            </GridItem>
-            <GridItem colSpan={4} hideBelow={"lg"}>
-                Response
-            </GridItem>
-        </Grid>
-    );
+  return (
+    <Grid
+      templateColumns={"repeat(12,1fr)"}
+      height={"100vh"}
+      bg={"neutral.900"}
+      color={"neutral.300"}
+      fontSize={"xs"}
+    >
+      <GridItem width={"200px"} bg={"gray.800"}>
+        aaa
+      </GridItem>
+      <GridItem colSpan={{ base: 10, lg: 6 }} minW={"400px"}>
+        <UrlForm />
+      </GridItem>
+      <GridItem colSpan={4} hideBelow={"lg"}>
+        Response
+      </GridItem>
+    </Grid>
+  );
 };

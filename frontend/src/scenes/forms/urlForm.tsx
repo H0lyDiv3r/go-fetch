@@ -1,5 +1,9 @@
 import { useState } from "react";
-import { FormInput } from "../../components";
+import {
+  DefaultButton,
+  FormInput,
+  MultipleKeyValueInput,
+} from "../../components";
 import {
   Box,
   Button,
@@ -12,6 +16,7 @@ import {
 } from "@chakra-ui/react";
 import { Methods, useRequestStore } from "../../store/store";
 import { MakeRequest } from "../../../wailsjs/go/request/Request";
+import { colors } from "../../themes";
 
 export const UrlForm = () => {
   const { url, method, params, headers, body, setUrl, setMethod, setJsonBody } =
@@ -31,7 +36,9 @@ export const UrlForm = () => {
         //     Status: true,
         // },
       }),
-    ).then((res) => console.log(JSON.parse(res)));
+    )
+      .then((res) => console.log(JSON.parse(res)))
+      .catch((res) => console.log("unknown error"));
   };
 
   return (
@@ -39,10 +46,9 @@ export const UrlForm = () => {
       <Flex p={"8px"}>
         <MethodSelector method={method} setMethod={setMethod} />
         <FormInput value={url} setValue={(e) => setUrl(e.target.value)} />
-        <Button onClick={() => handleRequest()} bg={"neutral.900"}>
-          send Request
-        </Button>
+        <DefaultButton action={() => handleRequest()}>Send</DefaultButton>
       </Flex>
+      <MultipleKeyValueInput />
     </>
   );
 };
@@ -56,21 +62,40 @@ const MethodSelector: React.FC<MethodSelectorType> = ({
   method,
   setMethod,
 }) => {
+  const methods = ["GET", "PUT", "POST", "DELETE"];
   return (
     <Menu matchWidth={true} closeOnBlur={true} closeOnSelect={true}>
       <MenuButton
-        p={"4px"}
-        bg={"blue"}
-        borderRadius={"10px"}
-        minWidth={"100px"}
+        fontSize={"xs"}
+        px={1}
+        bg={"neutral.800"}
+        borderRadius={"md"}
+        minWidth={"60px"}
+        mx={"4px"}
       >
-        <Box>{method}</Box>
+        {method}
       </MenuButton>
-      <MenuList minW={0} defaultValue={"GET"}>
-        <MenuItem onClick={() => setMethod(Methods.GET)}>GET</MenuItem>
-        <MenuItem onClick={() => setMethod(Methods.POST)}>POST</MenuItem>
-        <MenuItem onClick={() => setMethod(Methods.PUT)}>PUT</MenuItem>
-        <MenuItem onClick={() => setMethod(Methods.DELETE)}>DELETE</MenuItem>
+      <MenuList
+        border={"none"}
+        p={"6px"}
+        minW={0}
+        defaultValue={"GET"}
+        bg={"neutral.800"}
+        textAlign={"center"}
+      >
+        {methods.map((item: any, idx) => (
+          <MenuItem
+            key={idx}
+            borderRadius={"md"}
+            justifyContent={"center"}
+            px={0}
+            _hover={{ bg: `${colors.brand[500]}` }}
+            bg={"neutral.800"}
+            onClick={() => setMethod(Methods[item as Methods])}
+          >
+            {item}
+          </MenuItem>
+        ))}
       </MenuList>
     </Menu>
   );
