@@ -1,61 +1,37 @@
 import React, { useEffect, useState } from "react";
 import { FormInput } from "./formInput";
-import { Flex } from "@chakra-ui/react";
-import { DefaultButton } from "./buttons";
-import { useRequestStore } from "../../store/store";
+import { Checkbox, Flex } from "@chakra-ui/react";
 
-export const MultipleKeyValueInput = () => {
-  const { addParam, params, setParamKey } = useRequestStore();
-  const [param, setParam] = useState([
-    { id: 1, key: "Auth", value: "TOKEN GOES HERE" },
-  ]);
+type MultipleValueInputProps = {
+  vals: any;
+  addField: () => void;
+  setKey: (e: React.ChangeEvent<HTMLInputElement>, id: number) => void;
+  setVal: (e: React.ChangeEvent<HTMLInputElement>, id: number) => void;
+  setActive: (id: number) => void;
+};
 
-  const handleAddField = () => {
-    setParam((params) => {
-      return [
-        ...params,
-        { id: params[params.length - 1].id + 1, key: "", value: "" },
-      ];
-    });
-  };
-
-  // const setParamKey = (e: React.ChangeEvent<HTMLInputElement>, id: number) => {
-  //   const newKey = e.target.value;
-
-  //   setParam((prevParams) => {
-  //     return prevParams.map((param) =>
-  //       param.id === id ? { ...param, key: newKey } : param,
-  //     );
-  //   });
-  // };
-
-  const setParamVal = (e: React.ChangeEvent<HTMLInputElement>, id: number) => {
-    setParam((prev) => {
-      return prev.map((param) =>
-        param.id === id ? { ...param, value: e.target.value } : param,
-      );
-    });
-  };
-
-  useEffect(() => {
-    console.log(params);
-  }, []);
-
+export const MultipleKeyValueInput: React.FC<MultipleValueInputProps> = ({
+  vals,
+  addField,
+  setKey,
+  setVal,
+  setActive,
+}) => {
   return (
     <>
-      {params.map((item: any) => (
-        <Flex key={item.id} my={2}>
-          <FormInput
-            value={item.key}
-            setValue={(e) => setParamKey(e, item.id)}
-          />
-          <FormInput
-            value={item.value}
-            setValue={(e) => setParamVal(e, item.id)}
-          />
+      {vals.map((item: any) => (
+        <Flex key={item.id} m={2} p={0} alignItems={"center"}>
+          <Checkbox
+            size={"lg"}
+            isChecked={item.active}
+            colorScheme={"green"}
+            onChange={() => setActive(item.id)}
+          ></Checkbox>
+          <FormInput value={item.key} setValue={(e) => setKey(e, item.id)} />
+          <FormInput value={item.value} setValue={(e) => setVal(e, item.id)} />
         </Flex>
       ))}
-      <button onClick={addParam}>add</button>
+      <button onClick={addField}>add</button>
     </>
   );
 };

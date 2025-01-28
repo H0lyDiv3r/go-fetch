@@ -2,23 +2,6 @@ import React from "react";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
-// const setParamKey = (e: React.ChangeEvent<HTMLInputElement>, id: number) => {
-//   const newKey = e.target.value;
-
-//   setParam((prevParams) => {
-//     return prevParams.map((param) =>
-//       param.id === id ? { ...param, key: newKey } : param,
-//     );
-//   });
-// };
-
-// const setParamVal = (e: React.ChangeEvent<HTMLInputElement>, id: number) => {
-//   setParam((prev) => {
-//     return prev.map((param) =>
-//       param.id === id ? { ...param, value: e.target.value } : param,
-//     );
-//   });
-// };
 export enum Methods {
   GET = "GET",
   POST = "POST",
@@ -26,7 +9,7 @@ export enum Methods {
   DELETE = "DELETE",
 }
 type Headers = { [key: string]: string };
-type Params = { id: number; key: string; value: string }[];
+type Params = { id: number; key: string; value: string; active: boolean }[];
 type JsonBody = { [key: string]: string | number | boolean | JsonBody };
 type requestStore = {
   method: Methods;
@@ -38,7 +21,8 @@ type requestStore = {
   setUrl: (url: string) => void;
   addParam: () => void;
   setParamKey: (e: React.ChangeEvent<HTMLInputElement>, id: number) => void;
-  // setParamValue: (e: React.ChangeEvent<HTMLInputElement>, id: number) => void;
+  setParamValue: (e: React.ChangeEvent<HTMLInputElement>, id: number) => void;
+  setParamActive: (id: number) => void;
   addHeader: (name: string, value: string) => void;
   setJsonBody: (body: string) => void;
 };
@@ -48,7 +32,7 @@ export const useRequestStore = create<requestStore>()(
     (set, get) => ({
       method: Methods.GET,
       url: "",
-      params: [{ id: 1, key: "Auth", value: "TOKEN GOES HERE" }],
+      params: [{ id: 1, key: "Auth", value: "TOKEN GOES HERE", active: true }],
       headers: {},
       body: {},
       setMethod: (method: Methods) =>
@@ -62,6 +46,7 @@ export const useRequestStore = create<requestStore>()(
               id: state.params[state.params.length - 1].id + 1,
               key: "",
               value: "",
+              active: true,
             },
           ];
           return { ...state, params: params };
@@ -74,6 +59,27 @@ export const useRequestStore = create<requestStore>()(
             ...state,
             params: state.params.map((param) => {
               return param.id === id ? { ...param, key: newKey } : param;
+            }),
+          };
+        }),
+      setParamValue: (e: React.ChangeEvent<HTMLInputElement>, id: number) =>
+        set((state) => {
+          const newKey = e.target.value;
+          return {
+            ...state,
+            params: state.params.map((param) => {
+              return param.id === id ? { ...param, value: newKey } : param;
+            }),
+          };
+        }),
+      setParamActive: (id: number) =>
+        set((state) => {
+          return {
+            ...state,
+            params: state.params.map((param) => {
+              return param.id === id
+                ? { ...param, active: !param.active }
+                : param;
             }),
           };
         }),

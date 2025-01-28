@@ -19,8 +19,20 @@ import { MakeRequest } from "../../../wailsjs/go/request/Request";
 import { colors } from "../../themes";
 
 export const UrlForm = () => {
-  const { url, method, params, headers, body, setUrl, setMethod, setJsonBody } =
-    useRequestStore();
+  const {
+    url,
+    method,
+    params,
+    setParamKey,
+    setParamValue,
+    setParamActive,
+    addParam,
+    headers,
+    body,
+    setUrl,
+    setMethod,
+    setJsonBody,
+  } = useRequestStore();
   const tkn =
     "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VybmFtZSI6ImpvcyIsIkVtYWlsIjoiam9zcEBnbWFpbC5jb20ifQ.t3tK7UVG33YdWpudJUAFbBvoRG1qIJpMIiLr2h8BdHQ";
   const handleRequest = () => {
@@ -48,7 +60,13 @@ export const UrlForm = () => {
         <FormInput value={url} setValue={(e) => setUrl(e.target.value)} />
         <DefaultButton action={() => handleRequest()}>Send</DefaultButton>
       </Flex>
-      <MultipleKeyValueInput />
+      <MultipleKeyValueInput
+        vals={params}
+        addField={addParam}
+        setKey={setParamKey}
+        setVal={setParamValue}
+        setActive={setParamActive}
+      />
     </>
   );
 };
