@@ -15,8 +15,9 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { Methods, useRequestStore } from "../../store/store";
-import { MakeRequest } from "../../../wailsjs/go/request/Request";
+// import { MakeRequest } from "../../../wailsjs/go/request/Request";
 import { colors } from "../../themes";
+import { MakeRequest } from "../../../wailsjs/go/request/Request";
 
 export const UrlForm = () => {
   const {
@@ -28,6 +29,10 @@ export const UrlForm = () => {
     setParamActive,
     addParam,
     headers,
+    addHeader,
+    setHeaderKey,
+    setHeaderValue,
+    setHeaderActive,
     body,
     setUrl,
     setMethod,
@@ -36,13 +41,25 @@ export const UrlForm = () => {
   const tkn =
     "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VybmFtZSI6ImpvcyIsIkVtYWlsIjoiam9zcEBnbWFpbC5jb20ifQ.t3tK7UVG33YdWpudJUAFbBvoRG1qIJpMIiLr2h8BdHQ";
   const handleRequest = () => {
-    console.log(method, url);
+    const newParams: { [key: string]: string } = {};
+    const newHeaders: { [key: string]: string } = {};
+    headers.forEach((headers) => {
+      if (headers.active) {
+        newHeaders[headers.key] = headers.value;
+      }
+    });
+    params.forEach((param) => {
+      if (param.active) {
+        newParams[param.key] = param.value;
+      }
+    });
+
     MakeRequest(
       JSON.stringify({
         method: method,
         url: url,
-        // params: { param1: "param1value" },
-        headers: { Authorization: tkn },
+        params: newParams,
+        headers: newHeaders,
         // body: {
         //     Content: "aaaaaaaaaaaaaaandho",
         //     Status: true,
@@ -60,12 +77,21 @@ export const UrlForm = () => {
         <FormInput value={url} setValue={(e) => setUrl(e.target.value)} />
         <DefaultButton action={() => handleRequest()}>Send</DefaultButton>
       </Flex>
+      params
       <MultipleKeyValueInput
         vals={params}
         addField={addParam}
         setKey={setParamKey}
         setVal={setParamValue}
         setActive={setParamActive}
+      />
+      headers
+      <MultipleKeyValueInput
+        vals={headers}
+        addField={addHeader}
+        setKey={setHeaderKey}
+        setVal={setHeaderValue}
+        setActive={setHeaderActive}
       />
     </>
   );
@@ -118,3 +144,12 @@ const MethodSelector: React.FC<MethodSelectorType> = ({
     </Menu>
   );
 };
+
+// export const paramsToObject = (array: any[]) => {
+//   const newObject: { [key: string]: string } = {};
+//   array.forEach((item) => {
+//     Object.keys(item);
+//     Object.values(item);
+//     console.log(item);
+//   });
+// };

@@ -10,6 +10,7 @@ type DefaultButtonProps = {
 export const DefaultButton: React.FC<DefaultButtonProps> = ({
   action,
   children,
+  ...other
 }) => {
   return (
     <>

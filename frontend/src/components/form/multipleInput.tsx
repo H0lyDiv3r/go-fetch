@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FormInput } from "./formInput";
-import { Checkbox, Flex } from "@chakra-ui/react";
+import { Button, Checkbox, Flex } from "@chakra-ui/react";
+import { DefaultButton } from "./buttons";
 
 type MultipleValueInputProps = {
   vals: any;
@@ -31,7 +32,7 @@ export const MultipleKeyValueInput: React.FC<MultipleValueInputProps> = ({
           <FormInput value={item.value} setValue={(e) => setVal(e, item.id)} />
         </Flex>
       ))}
-      <button onClick={addField}>add</button>
+      <DefaultButton action={addField}>Add Field</DefaultButton>
     </>
   );
 };

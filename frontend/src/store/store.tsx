@@ -8,7 +8,7 @@ export enum Methods {
   PUT = "PUT",
   DELETE = "DELETE",
 }
-type Headers = { [key: string]: string };
+type Headers = { id: number; key: string; value: string; active: boolean }[];
 type Params = { id: number; key: string; value: string; active: boolean }[];
 type JsonBody = { [key: string]: string | number | boolean | JsonBody };
 type requestStore = {
@@ -23,7 +23,10 @@ type requestStore = {
   setParamKey: (e: React.ChangeEvent<HTMLInputElement>, id: number) => void;
   setParamValue: (e: React.ChangeEvent<HTMLInputElement>, id: number) => void;
   setParamActive: (id: number) => void;
-  addHeader: (name: string, value: string) => void;
+  addHeader: () => void;
+  setHeaderKey: (e: React.ChangeEvent<HTMLInputElement>, id: number) => void;
+  setHeaderValue: (e: React.ChangeEvent<HTMLInputElement>, id: number) => void;
+  setHeaderActive: (id: number) => void;
   setJsonBody: (body: string) => void;
 };
 
@@ -32,12 +35,13 @@ export const useRequestStore = create<requestStore>()(
     (set, get) => ({
       method: Methods.GET,
       url: "",
-      params: [{ id: 1, key: "Auth", value: "TOKEN GOES HERE", active: true }],
-      headers: {},
+      params: [{ id: 1, key: "", value: "", active: true }],
+      headers: [{ id: 1, key: "", value: "", active: true }],
       body: {},
       setMethod: (method: Methods) =>
         set((state) => ({ ...state, method: method })),
       setUrl: (url: string) => set((state) => ({ ...state, url: url })),
+      //==============================params=====================
       addParam: () =>
         set((state) => {
           const params = [
@@ -83,11 +87,51 @@ export const useRequestStore = create<requestStore>()(
             }),
           };
         }),
-      addHeader: (name: string, value: string) =>
+      //============================header==================
+      addHeader: () =>
         set((state) => {
-          const headers = { ...state.headers };
-          headers[name] = value;
+          const headers = [
+            ...state.headers,
+            {
+              id: state.headers[state.headers.length - 1].id + 1,
+              key: "",
+              value: "",
+              active: true,
+            },
+          ];
           return { ...state, headers: headers };
+        }),
+      setHeaderKey: (e: React.ChangeEvent<HTMLInputElement>, id: number) =>
+        set((state) => {
+          const newKey = e.target.value;
+
+          return {
+            ...state,
+            headers: state.headers.map((header) => {
+              return header.id === id ? { ...header, key: newKey } : header;
+            }),
+          };
+        }),
+      setHeaderValue: (e: React.ChangeEvent<HTMLInputElement>, id: number) =>
+        set((state) => {
+          const newKey = e.target.value;
+          return {
+            ...state,
+            headers: state.headers.map((header) => {
+              return header.id === id ? { ...header, value: newKey } : header;
+            }),
+          };
+        }),
+      setHeaderActive: (id: number) =>
+        set((state) => {
+          return {
+            ...state,
+            headers: state.headers.map((header) => {
+              return header.id === id
+                ? { ...header, active: !header.active }
+                : header;
+            }),
+          };
         }),
       setJsonBody: (body: string) =>
         set((state) => {
