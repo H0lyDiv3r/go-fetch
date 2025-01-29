@@ -20,6 +20,7 @@ import { Methods, useRequestStore } from "../../store/store";
 import { colors } from "../../themes";
 import { MakeRequest } from "../../../wailsjs/go/request/Request";
 import { ParamForm } from "./paramForm";
+import { HeaderForm } from "./headerForm";
 
 export const UrlForm = () => {
   const {
@@ -75,7 +76,7 @@ export const UrlForm = () => {
   };
 
   return (
-    <Box ml={2}>
+    <Box>
       <Box aria-label="Search url and method">
         <Flex>
           <MethodSelector method={method} setMethod={setMethod} />
@@ -84,19 +85,7 @@ export const UrlForm = () => {
         </Flex>
       </Box>
       <ParamForm />
-      <Box aria-label="headers" my={2}>
-        <Text as="h4" fontSize={"xl"} fontWeight={"semibold"}>
-          Headers
-        </Text>
-        <MultipleKeyValueInput
-          vals={headers}
-          addField={addHeader}
-          removeField={removeHeader}
-          setKey={setHeaderKey}
-          setVal={setHeaderValue}
-          setActive={setHeaderActive}
-        />
-      </Box>
+      <HeaderForm />
     </Box>
   );
 };

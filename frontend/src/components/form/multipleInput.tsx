@@ -30,6 +30,7 @@ export const MultipleKeyValueInput: React.FC<MultipleValueInputProps> = ({
 }) => {
   return (
     <Box>
+      <DefaultButton action={addField}>Add Field</DefaultButton>
       {vals.length < 1 && (
         <Flex my={2}>
           <Box
@@ -78,8 +79,6 @@ export const MultipleKeyValueInput: React.FC<MultipleValueInputProps> = ({
             />
           </Flex>
         ))}
-
-      <DefaultButton action={addField}>Add Field</DefaultButton>
     </Box>
   );
 };
