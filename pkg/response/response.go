@@ -2,7 +2,7 @@ package response
 
 import (
 	"encoding/json"
-	"fmt"
+	"go-fetch/pkg/errs"
 	"net/http"
 )
 
@@ -23,8 +23,7 @@ func SendResponse(res *http.Response, body []byte) string {
 
 	err := json.Unmarshal(body, &bodyData)
 	if err != nil {
-		fmt.Println("there has been an error parsing the bodysss", err)
-		return "parsing error" + err.Error()
+		return errs.SendError("error parsing response body", err.Error())
 	}
 	response := &ResponseModel{
 		TimeStamp:     res.Header.Get("Date"),
@@ -36,9 +35,8 @@ func SendResponse(res *http.Response, body []byte) string {
 	}
 
 	jsonRes, err := json.Marshal(response)
-
 	if err != nil {
-		return "parsing error" + err.Error()
+		return errs.SendError("unknown error", err.Error())
 	}
 
 	return string(jsonRes)

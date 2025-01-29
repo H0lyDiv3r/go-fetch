@@ -18,7 +18,7 @@ export const FormInput: React.FC<FormInputProps> = ({
   name,
 }) => {
   return (
-    <FormControl border={"none"} fontSize={"xs"} mx={1} my={0} py={0}>
+    <FormControl border={"none"} fontSize={"xs"} mx={2} my={0} py={0}>
       {label && <FormLabel>{label}</FormLabel>}
       <Input
         type={type}

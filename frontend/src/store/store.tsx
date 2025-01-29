@@ -20,10 +20,12 @@ type requestStore = {
   setMethod: (method: Methods) => void;
   setUrl: (url: string) => void;
   addParam: () => void;
+  removeParam: (id: number) => void;
   setParamKey: (e: React.ChangeEvent<HTMLInputElement>, id: number) => void;
   setParamValue: (e: React.ChangeEvent<HTMLInputElement>, id: number) => void;
   setParamActive: (id: number) => void;
   addHeader: () => void;
+  removeHeader: (id: number) => void;
   setHeaderKey: (e: React.ChangeEvent<HTMLInputElement>, id: number) => void;
   setHeaderValue: (e: React.ChangeEvent<HTMLInputElement>, id: number) => void;
   setHeaderActive: (id: number) => void;
@@ -35,8 +37,8 @@ export const useRequestStore = create<requestStore>()(
     (set, get) => ({
       method: Methods.GET,
       url: "",
-      params: [{ id: 1, key: "", value: "", active: true }],
-      headers: [{ id: 1, key: "", value: "", active: true }],
+      params: [{ id: 1, key: "", value: "", active: false }],
+      headers: [{ id: 1, key: "", value: "", active: false }],
       body: {},
       setMethod: (method: Methods) =>
         set((state) => ({ ...state, method: method })),
@@ -47,13 +49,23 @@ export const useRequestStore = create<requestStore>()(
           const params = [
             ...state.params,
             {
-              id: state.params[state.params.length - 1].id + 1,
+              id:
+                state.params.length > 0
+                  ? state.params[state.params.length - 1].id + 1
+                  : 1,
               key: "",
               value: "",
-              active: true,
+              active: false,
             },
           ];
           return { ...state, params: params };
+        }),
+      removeParam: (id: number) =>
+        set((state) => {
+          return {
+            ...state,
+            params: state.params.filter((param) => param.id !== id),
+          };
         }),
       setParamKey: (e: React.ChangeEvent<HTMLInputElement>, id: number) =>
         set((state) => {
@@ -93,13 +105,23 @@ export const useRequestStore = create<requestStore>()(
           const headers = [
             ...state.headers,
             {
-              id: state.headers[state.headers.length - 1].id + 1,
+              id:
+                state.headers.length > 0
+                  ? state.headers[state.headers.length - 1].id + 1
+                  : 1,
               key: "",
               value: "",
-              active: true,
+              active: false,
             },
           ];
           return { ...state, headers: headers };
+        }),
+      removeHeader: (id: number) =>
+        set((state) => {
+          return {
+            ...state,
+            headers: state.headers.filter((header) => header.id !== id),
+          };
         }),
       setHeaderKey: (e: React.ChangeEvent<HTMLInputElement>, id: number) =>
         set((state) => {

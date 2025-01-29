@@ -12,12 +12,14 @@ import {
   MenuButton,
   MenuItem,
   MenuList,
+  Text,
   useDisclosure,
 } from "@chakra-ui/react";
 import { Methods, useRequestStore } from "../../store/store";
 // import { MakeRequest } from "../../../wailsjs/go/request/Request";
 import { colors } from "../../themes";
 import { MakeRequest } from "../../../wailsjs/go/request/Request";
+import { ParamForm } from "./paramForm";
 
 export const UrlForm = () => {
   const {
@@ -28,8 +30,10 @@ export const UrlForm = () => {
     setParamValue,
     setParamActive,
     addParam,
+    removeParam,
     headers,
     addHeader,
+    removeHeader,
     setHeaderKey,
     setHeaderValue,
     setHeaderActive,
@@ -66,34 +70,34 @@ export const UrlForm = () => {
         // },
       }),
     )
-      .then((res) => console.log(JSON.parse(res)))
+      .then((res) => console.log(res))
       .catch((res) => console.log("unknown error"));
   };
 
   return (
-    <>
-      <Flex p={"8px"}>
-        <MethodSelector method={method} setMethod={setMethod} />
-        <FormInput value={url} setValue={(e) => setUrl(e.target.value)} />
-        <DefaultButton action={() => handleRequest()}>Send</DefaultButton>
-      </Flex>
-      params
-      <MultipleKeyValueInput
-        vals={params}
-        addField={addParam}
-        setKey={setParamKey}
-        setVal={setParamValue}
-        setActive={setParamActive}
-      />
-      headers
-      <MultipleKeyValueInput
-        vals={headers}
-        addField={addHeader}
-        setKey={setHeaderKey}
-        setVal={setHeaderValue}
-        setActive={setHeaderActive}
-      />
-    </>
+    <Box ml={2}>
+      <Box aria-label="Search url and method">
+        <Flex>
+          <MethodSelector method={method} setMethod={setMethod} />
+          <FormInput value={url} setValue={(e) => setUrl(e.target.value)} />
+          <DefaultButton action={() => handleRequest()}>Send</DefaultButton>
+        </Flex>
+      </Box>
+      <ParamForm />
+      <Box aria-label="headers" my={2}>
+        <Text as="h4" fontSize={"xl"} fontWeight={"semibold"}>
+          Headers
+        </Text>
+        <MultipleKeyValueInput
+          vals={headers}
+          addField={addHeader}
+          removeField={removeHeader}
+          setKey={setHeaderKey}
+          setVal={setHeaderValue}
+          setActive={setHeaderActive}
+        />
+      </Box>
+    </Box>
   );
 };
 
@@ -115,7 +119,6 @@ const MethodSelector: React.FC<MethodSelectorType> = ({
         bg={"neutral.800"}
         borderRadius={"md"}
         minWidth={"60px"}
-        mx={"4px"}
       >
         {method}
       </MenuButton>
