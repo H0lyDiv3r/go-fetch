@@ -1,6 +1,6 @@
 import { Grid, GridItem } from "@chakra-ui/react";
 import React from "react";
-import { UrlForm } from "../scenes";
+import { Response, UrlForm } from "../scenes";
 
 export const Layout = () => {
   return (
@@ -18,7 +18,7 @@ export const Layout = () => {
         <UrlForm />
       </GridItem>
       <GridItem colSpan={4} hideBelow={"lg"}>
-        Response
+        <Response />
       </GridItem>
     </Grid>
   );

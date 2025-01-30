@@ -23,26 +23,8 @@ import { ParamForm } from "./paramForm";
 import { HeaderForm } from "./headerForm";
 
 export const UrlForm = () => {
-  const {
-    url,
-    method,
-    params,
-    setParamKey,
-    setParamValue,
-    setParamActive,
-    addParam,
-    removeParam,
-    headers,
-    addHeader,
-    removeHeader,
-    setHeaderKey,
-    setHeaderValue,
-    setHeaderActive,
-    body,
-    setUrl,
-    setMethod,
-    setJsonBody,
-  } = useRequestStore();
+  const { url, method, params, headers, setUrl, setMethod, setResponse } =
+    useRequestStore();
   const tkn =
     "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VybmFtZSI6ImpvcyIsIkVtYWlsIjoiam9zcEBnbWFpbC5jb20ifQ.t3tK7UVG33YdWpudJUAFbBvoRG1qIJpMIiLr2h8BdHQ";
   const handleRequest = () => {
@@ -71,7 +53,9 @@ export const UrlForm = () => {
         // },
       }),
     )
-      .then((res) => console.log(res))
+      .then((res) => {
+        setResponse(JSON.parse(res));
+      })
       .catch((res) => console.log("unknown error"));
   };
 

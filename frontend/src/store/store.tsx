@@ -17,6 +17,8 @@ type requestStore = {
   params: Params;
   headers: Headers;
   body: JsonBody;
+  response: JsonBody;
+  setResponse: (res: JsonBody) => void;
   setMethod: (method: Methods) => void;
   setUrl: (url: string) => void;
   addParam: () => void;
@@ -40,6 +42,9 @@ export const useRequestStore = create<requestStore>()(
       params: [{ id: 1, key: "", value: "", active: false }],
       headers: [{ id: 1, key: "", value: "", active: false }],
       body: {},
+      response: {},
+      setResponse: (res: JsonBody) =>
+        set((state) => ({ ...state, response: res })),
       setMethod: (method: Methods) =>
         set((state) => ({ ...state, method: method })),
       setUrl: (url: string) => set((state) => ({ ...state, url: url })),

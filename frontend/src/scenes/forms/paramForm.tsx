@@ -14,7 +14,7 @@ export const ParamForm = () => {
   return (
     <Box aria-label="query parameters">
       <Box my={2}>
-        <Text as={"h3"} fontSize={"2xl"} fontWeight={"medium"}>
+        <Text as={"h3"} fontSize={"xl"} fontWeight={"medium"}>
           Params
         </Text>
       </Box>
