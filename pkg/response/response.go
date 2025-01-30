@@ -7,15 +7,18 @@ import (
 )
 
 type Body map[string]interface{}
-type Header map[string][]string
 
-type ResponseModel struct {
+type HeaderModel struct {
 	ContentLength string `json:"content-length"`
 	ContentType   string `json:"content-type"`
 	TimeStamp     string `json:"timeStamp"`
 	StatusCode    uint8  `json:"statusCode"`
 	Status        string `json:"status"`
-	Body          Body   `json:"body"`
+}
+
+type ResponseModel struct {
+	Header HeaderModel `json:"header"`
+	Body   Body        `json:"body"`
 }
 
 func SendResponse(res *http.Response, body []byte) string {
@@ -25,13 +28,17 @@ func SendResponse(res *http.Response, body []byte) string {
 	if err != nil {
 		return errs.SendError("error parsing response body", err.Error())
 	}
-	response := &ResponseModel{
+
+	headers := HeaderModel{
 		TimeStamp:     res.Header.Get("Date"),
 		ContentType:   res.Header.Get("Content-Type"),
 		ContentLength: res.Header.Get("Content-Length"),
 		Status:        res.Status,
 		StatusCode:    uint8(res.StatusCode),
-		Body:          bodyData,
+	}
+	response := &ResponseModel{
+		Header: headers,
+		Body:   bodyData,
 	}
 
 	jsonRes, err := json.Marshal(response)
