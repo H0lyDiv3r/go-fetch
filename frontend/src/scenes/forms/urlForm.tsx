@@ -21,9 +21,10 @@ import { colors } from "../../themes";
 import { MakeRequest } from "../../../wailsjs/go/request/Request";
 import { ParamForm } from "./paramForm";
 import { HeaderForm } from "./headerForm";
+import { JsonBodyInput } from "./jsonBodyInput";
 
 export const UrlForm = () => {
-  const { url, method, params, headers, setUrl, setMethod, setResponse } =
+  const { url, method, params, headers, setUrl, setMethod, setResponse, body } =
     useRequestStore();
   const tkn =
     "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VybmFtZSI6ImpvcyIsIkVtYWlsIjoiam9zcEBnbWFpbC5jb20ifQ.t3tK7UVG33YdWpudJUAFbBvoRG1qIJpMIiLr2h8BdHQ";
@@ -47,10 +48,7 @@ export const UrlForm = () => {
         url: url,
         params: newParams,
         headers: newHeaders,
-        // body: {
-        //     Content: "aaaaaaaaaaaaaaandho",
-        //     Status: true,
-        // },
+        body: JSON.parse(body),
       }),
     )
       .then((res) => {
@@ -70,6 +68,9 @@ export const UrlForm = () => {
       </Box>
       <ParamForm />
       <HeaderForm />
+      <Box>
+        <JsonBodyInput />
+      </Box>
     </Box>
   );
 };

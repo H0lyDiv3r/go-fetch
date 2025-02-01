@@ -17,7 +17,7 @@ export const Layout = () => {
       <GridItem colSpan={{ base: 10, lg: 6 }} minW={"400px"} p={2}>
         <UrlForm />
       </GridItem>
-      <GridItem colSpan={4} hideBelow={"lg"}>
+      <GridItem colSpan={4} hideBelow={"lg"} overflow={"auto"}>
         <Response />
       </GridItem>
     </Grid>

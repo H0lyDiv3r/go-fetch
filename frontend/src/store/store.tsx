@@ -16,7 +16,7 @@ type requestStore = {
   url: string;
   params: Params;
   headers: Headers;
-  body: JsonBody;
+  body: string;
   response: JsonBody;
   setResponse: (res: JsonBody) => void;
   setMethod: (method: Methods) => void;
@@ -31,7 +31,7 @@ type requestStore = {
   setHeaderKey: (e: React.ChangeEvent<HTMLInputElement>, id: number) => void;
   setHeaderValue: (e: React.ChangeEvent<HTMLInputElement>, id: number) => void;
   setHeaderActive: (id: number) => void;
-  setJsonBody: (body: string) => void;
+  setJsonBody: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 export const useRequestStore = create<requestStore>()(
@@ -41,7 +41,7 @@ export const useRequestStore = create<requestStore>()(
       url: "",
       params: [{ id: 1, key: "", value: "", active: false }],
       headers: [{ id: 1, key: "", value: "", active: false }],
-      body: {},
+      body: "",
       response: {},
       setResponse: (res: JsonBody) =>
         set((state) => ({ ...state, response: res })),
@@ -160,13 +160,13 @@ export const useRequestStore = create<requestStore>()(
             }),
           };
         }),
-      setJsonBody: (body: string) =>
+      setJsonBody: (e: React.ChangeEvent<HTMLInputElement>) =>
         set((state) => {
-          if (isValidJSON(body)) {
-            const jsonBody = JSON.parse(body);
-            return { ...state, body: JSON.parse(body) };
-          }
-          return { ...state, body: {} };
+          // if (isValidJSON(body)) {
+          // const jsonBody = JSON.parse(body);
+          return { ...state, body: e.target.value };
+          // }
+          // return { ...state, body: {} };
         }),
     }),
     {
@@ -176,7 +176,7 @@ export const useRequestStore = create<requestStore>()(
   ),
 );
 
-const isValidJSON = (str: string) => {
+export const isValidJSON = (str: string) => {
   try {
     JSON.parse(str);
     return true;

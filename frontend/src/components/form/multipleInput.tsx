@@ -32,7 +32,7 @@ export const MultipleKeyValueInput: React.FC<MultipleValueInputProps> = ({
     <Box>
       <DefaultButton action={addField}>Add Field</DefaultButton>
       {vals.length < 1 && (
-        <Flex my={2}>
+        <Flex my={2} gap={2}>
           <Box
             display={"flex"}
             w={"100%"}
@@ -48,7 +48,6 @@ export const MultipleKeyValueInput: React.FC<MultipleValueInputProps> = ({
             w={"100%"}
             bg={"neutral.800"}
             p={2}
-            mx={2}
             borderRadius={4}
           >
             <Text fontSize={"md"}>Value</Text>
