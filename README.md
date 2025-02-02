@@ -1,11 +1,6 @@
 # README
+#### i have decided to end the project here. the purpose was to try golang with a simple task. the app might be incomplete but my mission is
 
-## About
-
-This is the official Wails React-TS template.
-
-You can configure the project by editing `wails.json`. More information about the project settings can be found
-here: https://wails.io/docs/reference/project-config
 
 ## Live Development
 
