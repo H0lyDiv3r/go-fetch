@@ -16,7 +16,7 @@ export const DefaultButton: React.FC<DefaultButtonProps> = ({
     <>
       <Button
         fontWeight={"semibold"}
-        color={"brand.100"}
+        color={"neutral.800"}
         px={5}
         onClick={action}
         bg={"brand.500"}
