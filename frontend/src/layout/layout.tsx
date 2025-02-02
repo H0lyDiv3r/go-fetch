@@ -10,14 +10,12 @@ export const Layout = () => {
       bg={"neutral.900"}
       color={"neutral.300"}
       fontSize={"xs"}
+      overflow={"auto"}
     >
-      <GridItem width={"200px"} bg={"gray.800"}>
-        aaa
-      </GridItem>
-      <GridItem colSpan={{ base: 10, lg: 6 }} minW={"400px"} p={2}>
+      <GridItem colSpan={{ base: 12, lg: 6 }} minW={"400px"} p={2}>
         <UrlForm />
       </GridItem>
-      <GridItem colSpan={4} hideBelow={"lg"} overflow={"auto"}>
+      <GridItem colSpan={{ base: 12, lg: 6 }} overflow={"auto"} p={2}>
         <Response />
       </GridItem>
     </Grid>
