@@ -13,7 +13,14 @@ export const Response = () => {
     braceStyle: { color: colors.brand[100], fontSize: fontSizes.cmd },
   };
   return (
-    <Box p={2} bg={"neutral.800"} borderRadius={4} height={"100%"}>
+    <Box
+      p={2}
+      bg={"neutral.800"}
+      borderRadius={4}
+      overflow={"auto"}
+      minH={"300px"}
+      maxH={"95vh"}
+    >
       <JsonFormatter json={response} jsonStyle={jsonStyle} />
     </Box>
   );

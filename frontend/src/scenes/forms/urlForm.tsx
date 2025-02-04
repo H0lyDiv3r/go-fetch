@@ -15,7 +15,7 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
-import { Methods, useRequestStore } from "../../store/store";
+import { isValidJSON, Methods, useRequestStore } from "../../store/store";
 // import { MakeRequest } from "../../../wailsjs/go/request/Request";
 import { colors } from "../../themes";
 import { MakeRequest } from "../../../wailsjs/go/request/Request";
@@ -26,8 +26,6 @@ import { JsonBodyInput } from "./jsonBodyInput";
 export const UrlForm = () => {
   const { url, method, params, headers, setUrl, setMethod, setResponse, body } =
     useRequestStore();
-  const tkn =
-    "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VybmFtZSI6ImpvcyIsIkVtYWlsIjoiam9zcEBnbWFpbC5jb20ifQ.t3tK7UVG33YdWpudJUAFbBvoRG1qIJpMIiLr2h8BdHQ";
   const handleRequest = () => {
     const newParams: { [key: string]: string } = {};
     const newHeaders: { [key: string]: string } = {};
@@ -48,7 +46,7 @@ export const UrlForm = () => {
         url: url,
         params: newParams,
         headers: newHeaders,
-        body: JSON.parse(body),
+        body: isValidJSON(body) ? JSON.parse(body) : JSON.parse("{}"),
       }),
     )
       .then((res) => {

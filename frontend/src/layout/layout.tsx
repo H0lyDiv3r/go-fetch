@@ -1,12 +1,10 @@
 import { Grid, GridItem } from "@chakra-ui/react";
-import React from "react";
 import { Response, UrlForm } from "../scenes";
 
 export const Layout = () => {
   return (
     <Grid
       templateColumns={"repeat(12,1fr)"}
-      height={"100vh"}
       bg={"neutral.900"}
       color={"neutral.300"}
       fontSize={"xs"}

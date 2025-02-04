@@ -13,7 +13,7 @@ export const JsonBodyInput = () => {
     braceStyle: { color: colors.brand[200], fontsize: fontSizes.cmd },
   };
   return (
-    <Box display={"flex"} gap={2}>
+    <Box display={"flex"} gap={2} minH={"300px"}>
       <FormTextArea value={body} setValue={setJsonBody} />
       <Box bg={"neutral.800"} width={"100%"} borderRadius={4} p={2}>
         <JsonFormatter
